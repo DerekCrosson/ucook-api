@@ -9,8 +9,11 @@ var express = require('express'),
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017');
-
+mongoose.connect('mongodb+srv://admin:Kv6NZDEDfeazgNh@ucook-rdeiw.mongodb.net/ucook?retryWrites=true', { useNewUrlParser: true })
+  .then(
+    () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */ },
+    err => { console.log(err) }
+  );
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
