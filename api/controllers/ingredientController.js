@@ -3,7 +3,12 @@ var mongoose = require('mongoose'),
   Ingredients = mongoose.model('Ingredients');
 
 exports.listIngredients = function (req, res) {
-  Ingredients.find({}, function (err, ingredients) {
+  const search = req.query.search;
+  var find = {};
+  if (search) {
+    find = { name: new RegExp(search, "i") };
+  }
+  Ingredients.find(find, function (err, ingredients) {
     if (err)
       res.send(err);
     res.json(ingredients);

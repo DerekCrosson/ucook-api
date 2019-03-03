@@ -6,7 +6,6 @@ module.exports = function (app) {
     .get(ingredientList.listIngredients)
     .post(ingredientList.createIngredient);
 
-
   app.route('/ingredient/:id')
     .put(ingredientList.updateIngredient)
     .delete(ingredientList.deleteIngredient);
