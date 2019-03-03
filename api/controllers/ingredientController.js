@@ -8,7 +8,9 @@ exports.listIngredients = function (req, res) {
   if (search) {
     find = { name: new RegExp(search, "i") };
   }
-  Ingredients.find(find, function (err, ingredients) {
+  const q = Ingredients.find(find)
+    .limit(20);
+  q.exec((err, ingredients) => {
     if (err)
       res.send(err);
     res.json(ingredients);
