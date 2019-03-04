@@ -10,6 +10,15 @@ exports.getIngredients = function (req, res) {
   });
 };
 
+exports.createUser = function (req, res) {
+  var newUser = new User(req.body);
+  newUser.save(function (err, user) {
+    if (err)
+      res.send(err);
+    res.json(user);
+  });
+};
+
 exports.addIngredient = function (req, res) {
   User.findOneAndUpdate(
     { _id: req.params.id }, 
