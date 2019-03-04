@@ -1,13 +1,7 @@
 'use strict'
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    IngredientSchema = require('./schemas/ingredientSchema');
 var Schema = mongoose.Schema;
-
-var RecipeIngredientSchema = new Schema({
-  name: {
-    type: String,
-    required: 'Enter the recipe name'
-  }
-});
 
 var RecipeSchema = new Schema({
   name: {
@@ -18,7 +12,7 @@ var RecipeSchema = new Schema({
     type: String
   },
   ingredients: {
-    type: [RecipeIngredientSchema]
+    type: [IngredientSchema]
   },
   rating: {
     type: Number,

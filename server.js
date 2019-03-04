@@ -5,11 +5,18 @@ var express = require('express'),
   Ingredient = require('./api/models/ingredientModel'),
   ShoppingList = require('./api/models/shoppingListModel'),
   Recipes = require('./api/models/recipeModel'),
-  bodyParser = require('body-parser');
+  User = require('./api/models/userModel'),
+  bodyParser = require('body-parser'),
+  morgan = require('morgan');
+
+app.use(morgan('tiny'));
+
+const connectionString = process.env.MONGO_DB || 'mongodb://localhost:27017/ucook'
+// mongodb+srv://admin:Kv6NZDEDfeazgNh@ucook-rdeiw.mongodb.net/ucook?retryWrites=true
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb+srv://admin:Kv6NZDEDfeazgNh@ucook-rdeiw.mongodb.net/ucook?retryWrites=true', { useNewUrlParser: true })
+mongoose.connect(connectionString, { useNewUrlParser: true })
   .then(
     () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */ },
     err => { console.log(err) }

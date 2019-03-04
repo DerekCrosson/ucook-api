@@ -1,16 +1,5 @@
 'use strict'
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-
-var IngredientSchema = new Schema({
-  name: {
-    type: String,
-    required: 'Enter the ingredient name'
-  },
-  createdDate: {
-    type: Date,
-    default: Date.now
-  }
-});
+var mongoose = require('mongoose'),
+    IngredientSchema = require('./schemas/ingredientSchema');
 
 module.exports = mongoose.model('Ingredients', IngredientSchema);
