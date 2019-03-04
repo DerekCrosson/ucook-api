@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
   ingredients: {
     type: [IngredientSchema],
-    required: 'Enter the ingredient name'
+    default: []
   },
   createdDate: {
     type: Date,
