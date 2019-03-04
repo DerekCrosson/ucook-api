@@ -28,9 +28,11 @@ app.use(bodyParser.json());
 var ingredientRoutes = require('./api/routes/ingredientRoutes');
 var shoppingListRoutes = require('./api/routes/shoppingListRoutes');
 var recipeRoutes = require('./api/routes/recipeRoutes');
+var userRoutes = require('./api/routes/userRoutes');
 ingredientRoutes(app);
 shoppingListRoutes(app);
 recipeRoutes(app);
+userRoutes(app);
 
 app.use(function (req, res) {
   res.status(404).send({ url: req.originalUrl + ' not found' })

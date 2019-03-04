@@ -27,7 +27,7 @@ exports.createIngredient = function (req, res) {
 };
 
 exports.updateIngredient = function (req, res) {
-  Ingredients.findOneAndUpdate({ _id: req.params.ingredientId }, req.body, { new: true }, function (err, ingredient) {
+  Ingredients.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, function (err, ingredient) {
     if (err)
       res.send(err);
     res.json(ingredient);
