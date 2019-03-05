@@ -6,7 +6,7 @@ exports.getIngredients = function (req, res) {
   User.findOne({ _id: req.params.id }, (err, user) => {
     if (err)
       res.send(err);
-    res.json(user.ingredients);
+    res.json(user ? user.ingredients : []);
   });
 };
 
