@@ -20,9 +20,6 @@ exports.createUser = function (req, res) {
 };
 
 exports.addIngredient = function (req, res) {
-  console.log('body',req.body)
-  console.log('params',req.params)
-  console.log('query',req.query)
   User.findOneAndUpdate(
     { _id: req.params.id }, 
     { $push: { ingredients: req.body } },
