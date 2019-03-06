@@ -13,10 +13,12 @@
     "nodemon": "^1.18.10"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "mongoose": "^5.4.16",
     "morgan": "^1.9.1",
+    "node-cache": "^4.2.0",
     "winston": "^3.2.1"
   }
 }

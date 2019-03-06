@@ -1,8 +1,48 @@
 'use strict';
 var mongoose = require('mongoose'),
-  Recipes = mongoose.model('Recipes');
+  Recipes = mongoose.model('Recipes'),
+  axios = require('axios'),
+  NodeCache = require( "node-cache" ),
+  config = require('../config');
+
+const myCache = new NodeCache();
+
+const spoon = axios.create({
+  baseURL: config.spoonacularUrl,
+  headers: {'X-RapidAPI-Key': config.spoonacularKey}
+});
+
+const getRecipes = async ingredients => {
+  // returns recipes by ingredient and shows missing and used
+  try {
+    const encodeIng = encodeURIComponent(ingredients);
+    return await spoon.get("/recipes/findByIngredients?number=5&ranking=1&ingredients=" + encodeIng);
+  } catch(err) {
+    console.error(err);
+  }
+};
+
+exports.getByIngredients = async (req, res) => {
+  try {
+    const ingredients = req.body.ingredients || '';
+    const cache = myCache.get(ingredients);
+    if (cache) {
+      // important cache return to limit api calls
+      res.json(cache);
+    }
+    
+    const recipesRes = await getRecipes(ingredients);
+    const recipes = recipesRes.data || [];
+    myCache.set(ingredients, recipes);
+    res.json(recipes);
+  } catch(err) {
+    console.log(err)
+    res.send(err)
+  }
+};
 
 exports.listRecipes = function (req, res) {
+  // could get user recipes as well
   Recipes.find({}, function (err, recipes) {
     if (err)
       res.send(err);
