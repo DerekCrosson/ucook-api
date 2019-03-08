@@ -29,6 +29,7 @@ exports.getByIngredients = async (req, res) => {
     if (cache) {
       // important cache return to limit api calls
       res.json(cache);
+      return;
     }
     
     const recipesRes = await getRecipes(ingredients);
