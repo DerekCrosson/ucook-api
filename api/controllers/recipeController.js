@@ -52,7 +52,7 @@ exports.getRecipeInfo = async (req, res) => {
     const recipeRes = await getRecipeInfo(id);
     const recipeMethod = await getRecipeMethod(id);
     const recipe = recipeRes.data || {};
-    recipe.method = recipeMethod || [];
+    recipe.method = recipeMethod.data || [];
     recipesCache.set(id, recipe);
     res.json(recipe);
   } catch(err) {
