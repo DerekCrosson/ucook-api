@@ -31,6 +31,14 @@ const getRecipeInfo = async id => {
   }
 };
 
+const getRecipeMethod = async id => {
+  try {
+    return await spoon.get(`/recipes/${id}/analyzedInstructions?stepBreakdown=false`);
+  } catch(err) {
+    console.error(err);
+  }
+};
+
 exports.getRecipeInfo = async (req, res) => {
   try {
     const id = req.params.id;
@@ -42,7 +50,9 @@ exports.getRecipeInfo = async (req, res) => {
     }
     
     const recipeRes = await getRecipeInfo(id);
+    const recipeMethod = await getRecipeMethod(id);
     const recipe = recipeRes.data || {};
+    recipe.method = recipeMethod || [];
     recipesCache.set(id, recipe);
     res.json(recipe);
   } catch(err) {
