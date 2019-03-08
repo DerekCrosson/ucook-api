@@ -24,7 +24,7 @@ const getRecipes = async ingredients => {
 
 exports.getByIngredients = async (req, res) => {
   try {
-    console.log(req.params)
+    console.log('params',req.params)
     const ingredients = req.params.ingredients || '';
     const cache = myCache.get(ingredients);
     if (cache) {
@@ -32,7 +32,7 @@ exports.getByIngredients = async (req, res) => {
       res.json(cache);
     }
     
-    const recipesRes = await getRecipes(ingredients);
+    const recipesRes = {data:''}//await getRecipes(ingredients);
     const recipes = recipesRes.data || [];
     myCache.set(ingredients, recipes);
     res.json(recipes);
