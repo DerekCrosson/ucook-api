@@ -1,15 +1,16 @@
 'use strict';
 module.exports = function (app) {
-  var recipeList = require('../controllers/recipeController');
+  var recipe = require('../controllers/recipeController');
 
-  app.route('/recipe')
-    .get(recipeList.listRecipes)
-    .post(recipeList.createRecipe);
+  // app.route('/recipe')
+  //   .get(recipeList.listRecipes)
+  //   .post(recipeList.createRecipe);
 
   app.route('/recipe/:id')
-    .put(recipeList.updateRecipe)
-    .delete(recipeList.deleteRecipe);
+    .get(recipe.getRecipeInfo)
+    //.put(recipeList.updateRecipe)
+    //.delete(recipeList.deleteRecipe);
 
   app.route('/recipeByIngredients')
-    .get(recipeList.getByIngredients)
+    .get(recipe.getByIngredients)
 };

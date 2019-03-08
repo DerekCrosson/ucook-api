@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
   NodeCache = require( "node-cache" ),
   config = require('../config');
 
-const myCache = new NodeCache();
+const ingredientsCache = new NodeCache();
+const recipesCache = new NodeCache();
 
 const spoon = axios.create({
   baseURL: config.spoonacularUrl,
@@ -22,10 +23,38 @@ const getRecipes = async ingredients => {
   }
 };
 
+const getRecipeInfo = async id => {
+  try {
+    return await spoon.get(`/recipes/${id}/information`);
+  } catch(err) {
+    console.error(err);
+  }
+};
+
+exports.getRecipeInfo = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const cache = recipesCache.get(id);
+    if (cache) {
+      // important cache return to limit api calls
+      res.json(cache);
+      return;
+    }
+    
+    const recipeRes = await getRecipeInfo(id);
+    const recipe = recipeRes.data || {};
+    recipesCache.set(id, recipe);
+    res.json(recipe);
+  } catch(err) {
+    console.log(err)
+    res.send(err)
+  }
+};
+
 exports.getByIngredients = async (req, res) => {
   try {
     const ingredients = req.query.ingredients || '';
-    const cache = myCache.get(ingredients);
+    const cache = ingredientsCache.get(ingredients);
     if (cache) {
       // important cache return to limit api calls
       res.json(cache);
@@ -34,7 +63,7 @@ exports.getByIngredients = async (req, res) => {
     
     const recipesRes = await getRecipes(ingredients);
     const recipes = recipesRes.data || [];
-    myCache.set(ingredients, recipes);
+    ingredientsCache.set(ingredients, recipes);
     res.json(recipes);
   } catch(err) {
     console.log(err)
