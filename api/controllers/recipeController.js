@@ -24,7 +24,8 @@ const getRecipes = async ingredients => {
 
 exports.getByIngredients = async (req, res) => {
   try {
-    const ingredients = req.body.ingredients || '';
+    console.log(req.params)
+    const ingredients = req.params.ingredients || '';
     const cache = myCache.get(ingredients);
     if (cache) {
       // important cache return to limit api calls
